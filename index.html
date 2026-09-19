@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>导师书单 · 六个主题</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#E9EBEE; --surface:#FDFDFC; --surface-2:#F3F4F6;
+  --ink:#151A20; --ink-2:#39424D; --muted:#6B7684;
+  --line:#D2D7DE; --line-2:#E4E8ED;
+  --accent:#1E6F6A; --accent-ink:#14504C; --accent-soft:#D7E7E5;
+  --amber:#9E5A1E; --amber-soft:#F3E2D2;
+  --shadow:0 1px 2px rgba(18,26,34,.06), 0 8px 24px rgba(18,26,34,.07);
+  --shadow-cover:0 2px 6px rgba(18,26,34,.14), 0 14px 32px rgba(18,26,34,.16);
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#0F1216; --surface:#181C22; --surface-2:#1F242B;
+  --ink:#E9ECEF; --ink-2:#C2C9D1; --muted:#8C97A3;
+  --line:#2B313A; --line-2:#242A32;
+  --accent:#4FB5AA; --accent-ink:#8ED5CC; --accent-soft:#17302E;
+  --amber:#E0954F; --amber-soft:#33241691;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.45);
+  --shadow-cover:0 2px 8px rgba(0,0,0,.5), 0 16px 36px rgba(0,0,0,.55);
+}}
+:root[data-theme="dark"]{
+  --bg:#0F1216; --surface:#181C22; --surface-2:#1F242B;
+  --ink:#E9ECEF; --ink-2:#C2C9D1; --muted:#8C97A3;
+  --line:#2B313A; --line-2:#242A32;
+  --accent:#4FB5AA; --accent-ink:#8ED5CC; --accent-soft:#17302E;
+  --amber:#E0954F; --amber-soft:#332416;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.45);
+  --shadow-cover:0 2px 8px rgba(0,0,0,.5), 0 16px 36px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  font-size:15px; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+.mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+.serif{font-family:"Fraunces","Iowan Old Style","Songti SC",Georgia,serif}
+
+/* ---------- deck shell ---------- */
+.deck{height:100%; display:flex; flex-direction:column}
+.rail{
+  position:sticky; top:env(safe-area-inset-top,0px); z-index:20;
+  display:flex; align-items:center; gap:14px;
+  padding:10px 20px; background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(10px); border-bottom:1px solid var(--line-2);
+}
+.brandmark{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); white-space:nowrap}
+.dots{display:flex; gap:6px; margin-left:auto; flex-wrap:wrap}
+.dot{
+  width:26px; height:5px; border-radius:99px; border:0; padding:0; cursor:pointer;
+  background:var(--line); transition:background .18s;
+}
+.dot[aria-current="true"]{background:var(--accent)}
+.dot:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+
+.stage{flex:1; min-height:0; overflow-y:auto; scroll-behavior:smooth}
+.slide{display:none; padding:34px 20px 96px; max-width:1180px; margin:0 auto}
+.slide[data-active="true"]{display:block}
+
+/* ---------- cover slide ---------- */
+.cover-wrap{padding-block:min(9vh,78px)}
+.kicker{font-size:11.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--accent-ink); margin-bottom:22px}
+h1.title{
+  font-family:"Fraunces","Songti SC",Georgia,serif; font-weight:600;
+  font-size:clamp(34px,6.2vw,62px); line-height:1.08; letter-spacing:-.015em;
+  margin:0 0 18px; text-wrap:balance; max-width:16ch;
+}
+.subtitle{font-size:17px; color:var(--ink-2); max-width:46ch; margin:0 0 34px}
+.meta-row{display:flex; flex-wrap:wrap; gap:10px 28px; padding-top:22px; border-top:1px solid var(--line)}
+.meta{display:flex; flex-direction:column; gap:2px}
+.meta b{font-family:"Fraunces",Georgia,serif; font-size:26px; font-weight:600; font-variant-numeric:tabular-nums}
+.meta span{font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted)}
+
+/* ---------- theme header ---------- */
+.theme-head{display:flex; gap:20px; align-items:flex-start; margin-bottom:26px}
+.theme-num{
+  font-family:"Fraunces",Georgia,serif; font-size:44px; font-weight:600; line-height:1;
+  color:var(--accent); font-variant-numeric:tabular-nums; flex:none; padding-top:2px;
+}
+.theme-txt{min-width:0}
+h2.theme-title{
+  font-family:"Fraunces","Songti SC",Georgia,serif; font-weight:600;
+  font-size:clamp(25px,3.6vw,36px); line-height:1.15; margin:0 0 4px; letter-spacing:-.01em;
+}
+.theme-en{font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-bottom:10px}
+.theme-lead{font-size:15.5px; color:var(--ink-2); max-width:56ch; margin:0 0 10px}
+.cue{
+  display:inline-flex; align-items:center; gap:7px; font-size:11.5px; color:var(--muted);
+  background:var(--surface-2); border:1px solid var(--line-2); border-radius:99px; padding:3px 11px;
+}
+.cue em{font-style:normal; color:var(--accent-ink)}
+
+/* ---------- book grid ---------- */
+.grid{display:grid; gap:18px; grid-template-columns:repeat(auto-fit,minmax(224px,1fr))}
+.book{
+  display:flex; flex-direction:column; gap:12px;
+  background:var(--surface); border:1px solid var(--line-2); border-radius:6px;
+  padding:18px 16px 16px; box-shadow:var(--shadow);
+}
+.book img{
+  width:126px; height:auto; align-self:flex-start; border-radius:2px;
+  box-shadow:var(--shadow-cover); background:var(--surface-2);
+}
+.bt{font-family:"Fraunces",Georgia,serif; font-size:17.5px; font-weight:600; line-height:1.22; margin:0; text-wrap:balance}
+.bcn{font-size:13px; color:var(--ink-2); margin:2px 0 0}
+.bau{font-size:11.5px; letter-spacing:.04em; color:var(--muted); margin:5px 0 0}
+.bd{font-size:13.5px; line-height:1.62; color:var(--ink-2); margin:0; flex:1}
+.acts{display:flex; gap:8px; flex-wrap:wrap; padding-top:4px; margin-top:auto}
+.btn{
+  display:inline-flex; align-items:center; gap:6px; text-decoration:none; cursor:pointer;
+  font-size:12.5px; font-weight:500; padding:7px 13px; border-radius:4px;
+  border:1px solid var(--line); color:var(--ink); background:var(--surface-2);
+  transition:background .15s,border-color .15s,color .15s;
+}
+.btn:hover{border-color:var(--accent); color:var(--accent-ink)}
+.btn.solid{background:var(--accent); border-color:var(--accent); color:#fff}
+.btn.solid:hover{background:var(--accent-ink); border-color:var(--accent-ink); color:#fff}
+.btn.amber{background:var(--amber-soft); border-color:var(--amber); color:var(--amber)}
+.btn:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+
+/* ---------- publications ---------- */
+.pubs{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.pub{
+  background:var(--surface); border:1px solid var(--line-2); border-left:3px solid var(--accent);
+  border-radius:4px; padding:20px 20px 18px; box-shadow:var(--shadow);
+  display:flex; flex-direction:column; gap:10px;
+}
+.pub h3{font-family:"Fraunces",Georgia,serif; font-size:21px; font-weight:600; margin:0}
+.pub .bcn{margin:0}
+.pub p{font-size:13.5px; color:var(--ink-2); margin:0; flex:1; line-height:1.62}
+
+/* ---------- closing ---------- */
+.close-wrap{padding-block:min(7vh,58px)}
+.cart-card{
+  background:var(--surface); border:1px solid var(--line); border-radius:8px;
+  padding:26px 24px; box-shadow:var(--shadow); max-width:620px; margin-top:26px;
+}
+.cart-card h3{font-family:"Fraunces",Georgia,serif; font-size:23px; font-weight:600; margin:0 0 8px}
+.cart-card p{font-size:14px; color:var(--ink-2); margin:0 0 18px}
+.note{font-size:12px; color:var(--muted); margin:14px 0 0; line-height:1.6}
+.big{font-size:14.5px; padding:11px 20px}
+
+/* ---------- nav ---------- */
+.nav{
+  position:fixed; right:0; bottom:0; z-index:30;
+  display:flex; align-items:center; gap:8px;
+  padding:14px 20px; padding-bottom:calc(14px + env(safe-area-inset-bottom,0px));
+}
+.nav button{
+  width:38px; height:38px; border-radius:99px; cursor:pointer;
+  border:1px solid var(--line); background:var(--surface); color:var(--ink);
+  font-size:15px; line-height:1; display:grid; place-items:center; box-shadow:var(--shadow);
+}
+.nav button:hover:not(:disabled){border-color:var(--accent); color:var(--accent-ink)}
+.nav button:disabled{opacity:.34; cursor:default}
+.counter{
+  font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--muted);
+  font-variant-numeric:tabular-nums; background:var(--surface); border:1px solid var(--line);
+  border-radius:99px; padding:8px 12px; box-shadow:var(--shadow);
+}
+@media (max-width:620px){
+  .slide{padding:26px 16px 96px}
+  .theme-head{gap:14px}
+  .theme-num{font-size:32px}
+  .book img{width:108px}
+  .brandmark{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important; scroll-behavior:auto!important}}
+</style>
+
+</head>
+<body>
+<div class="deck">
+  <div class="rail">
+    <span class="brandmark mono">Mentorship Program · Final Session</span>
+    <nav class="dots" id="dots" aria-label="幻灯片导航"></nav>
+  </div>
+  <main class="stage" id="stage">
+    <section class="slide" data-active="true" data-label="封面">
+      <div class="cover-wrap">
+        <p class="kicker mono">六个月 · 最后一课</p>
+        <h1 class="title">导师留下的书单</h1>
+        <p class="subtitle">六个主题，十七本书，三份刊物。不是读完就结束的清单，是接下来几年可以反复回来翻的地图。</p>
+        <div class="meta-row">
+          <div class="meta"><b>06</b><span>主题</span></div>
+          <div class="meta"><b>17</b><span>本书</span></div>
+          <div class="meta"><b>03</b><span>刊物</span></div>
+        </div>
+      </div>
+    </section>
+    <section class="slide" data-label="价值观">
+      <header class="theme-head">
+        <div class="theme-num mono">01</div>
+        <div class="theme-txt">
+          <h2 class="theme-title">价值观</h2>
+          <p class="theme-en mono">Values</p>
+          <p class="theme-lead">先定坐标，再谈速度。知道自己为什么出发，才不会在别人的成功里迷路。</p>
+          <span class="cue mono">导师原话关键词 · <em>north star</em></span>
+        </div>
+      </header>
+      <div class="grid">
+      <article class="book">
+        <img src="https://m.media-amazon.com/images/P/0787987514.01._SCLZZZZZZZ_.jpg" alt="True North 封面" loading="lazy" width="126">
+        <div>
+          <h3 class="bt">True North</h3>
+          <p class="bcn">真北</p>
+          <p class="bau mono">Bill George</p>
+        </div>
+        <p class="bd">所谓“真北”，是你自己的核心价值观和内在动力。本书讲的是如何据此建立真实的领导力，而不是在追逐成功的过程中把自己弄丢。</p>
+        <div class="acts">
+          <a class="btn solid" href="https://www.amazon.com/dp/0787987514" target="_blank" rel="noopener">Amazon 页面</a>
+          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=0787987514&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
+        </div>
+      </article>
+      <article class="book">
+        <img src="https://m.media-amazon.com/images/P/1501124021.01._SCLZZZZZZZ_.jpg" alt="Principles: Life and Work 封面" loading="lazy" width="126">
+        <div>
+          <h3 class="bt">Principles: Life and Work</h3>
+          <p class="bcn">原则</p>
+          <p class="bau mono">Ray Dalio</p>
+        </div>
+        <p class="bd">桥水创始人达利欧把自己几十年的决策方式写成了一套可执行的原则。核心不是抄他的答案，是学他怎么把经验沉淀成体系。</p>
+        <div class="acts">
+          <a class="btn solid" href="https://www.amazon.com/dp/1501124021" target="_blank" rel="noopener">Amazon 页面</a>
+          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=1501124021&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
+        </div>
+      </article>
+      <article class="book">
+        <img src="https://m.media-amazon.com/images/P/1591846447.01._SCLZZZZZZZ_.jpg" alt="Start with Why 封面" loading="lazy" width="126">
+        <div>
+          <h3 class="bt">Start with Why</h3>
+          <p class="bcn">从“为什么”开始</p>
+          <p class="bau mono">Simon Sinek</p>
+        </div>
+        <p class="bd">行动和沟通之前，先说清楚使命与信念。“为什么”才是驱动自己、也打动别人的那一层。</p>
+        <div class="acts">
+          <a class="btn solid" href="https://www.amazon.com/dp/1591846447" target="_blank" rel="noopener">Amazon 页面</a>
+          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=1591846447&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
+        </div>
+      </article>
+      <article class="book">
+        <img src="https://m.media-amazon.com/images/P/1434768740.01._SCLZZZZZZZ_.jpg" alt="The Juggling Act 封面" loading="lazy" width="126">
+        <div>
+          <h3 class="bt">The Juggling Act</h3>
+          <p class="bcn">平衡的智慧</p>
+          <p class="bau mono">Pat Gelsinger</p>
+        </div>
+        <p class="bd">英特尔 CEO 帕特·基辛格谈信仰、家庭与事业的平衡：追求卓越的同时，怎么不把生活当成代价付出去。</p>
+        <div class="acts">
+          <a class="btn solid" href="https://www.amazon.com/dp/1434768740" target="_blank" rel="noopener">Amazon 页面</a>
+          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=1434768740&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
+        </div>
+      </article>
+      </div>
+    </section>
+    <section class="slide" data-label="沟通">
+      <header class="theme-head">
+        <div class="theme-num mono">02</div>
+        <div class="theme-txt">
+          <h2 class="theme-title">沟通</h2>
+          <p class="theme-en mono">Communication</p>
+          <p class="theme-lead">沟通的难点从来不在说什么，而在对方还愿不愿意听。</p>
+          <span class="cue mono">导师原话关键词 · <em>crucial conversation · radical candor</em></span>
+        </div>
+      </header>
+      <div class="grid">
+      <article class="book">
+        <img src="https://m.media-amazon.com/images/P/1451663889.01._SCLZZZZZZZ_.jpg" alt="How to Talk So Kids Will Listen &amp; Listen So Kids Will Talk 封面" loading="lazy" width="126">
+        <div>
+          <h3 class="bt">How to Talk So Kids Will Listen &amp; Listen So Kids Will Talk</h3>
+          <p class="bcn">如何说孩子才会听</p>
+          <p class="bau mono">Adele Faber, Elaine Mazlish</p>
+        </div>
+        <p class="bd">表面是育儿书，实际讲的是不评判、共情和倾听——这套技巧在职场和成人关系里同样成立。</p>
+        <div class="acts">
+          <a class="btn solid" href="https://www.amazon.com/dp/1451663889" target="_blank" rel="noopener">Amazon 页面</a>
+          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=1451663889&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
+        </div>
+      </article>
+      <article class="book">
+        <img src="https://m.media-amazon.com/images/P/1260474186.01._SCLZZZZZZZ_.jpg" alt="Crucial Conversations 封面" loading="lazy" width="126">
+        <div>
+          <h3 class="bt">Crucial Conversations</h3>
+          <p class="bcn">关键对话</p>
+          <p class="bau mono">Kerry Patterson et al.</p>
+        </div>
+        <p class="bd">高风险、情绪激烈、意见对立的那几次对话，往往决定结果。本书教你在那种时刻保持理性、营造安全感、把共识谈出来。</p>
+        <div class="acts">
+          <a class="btn solid" href="https://www.amazon.com/dp/1260474186" target="_blank" rel="noopener">Amazon 页面</a>
+          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=1260474186&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
+        </div>
+      </article>
+      <article class="book">
+        <img src="https://m.media-amazon.com/images/P/1250235375.01._SCLZZZZZZZ_.jpg" alt="Radical Candor 封面" loading="lazy" width="126">
+        <div>
+          <h3 class="bt">Radical Candor</h3>
+          <p class="bcn">绝对坦率</p>
+          <p class="bau mono">Kim Scott</p>
+        </div>
+        <p class="bd">同时做到“个体关怀”和“直接挑战”。少了前者是冒犯，少了后者是虚伪，两者都在才叫有效反馈。</p>
+        <div class="acts">
+          <a class="btn solid" href="https://www.amazon.com/dp/1250235375" target="_blank" rel="noopener">Amazon 页面</a>
+          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=1250235375&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
+        </div>
+      </article>
+      </div>
+    </section>
+    <section class="slide" data-label="玩转组织架构">
+      <header class="theme-head">
+        <div class="theme-num mono">03</div>
+        <div class="theme-txt">
+          <h2 class="theme-title">玩转组织架构</h2>
+          <p class="theme-en mono">Navigate Organization</p>
+          <p class="theme-lead">组织不是组织架构图。真正跑起来的是那张看不见的关系网。</p>
+          <span class="cue mono">导师原话关键词 · <em>office politics · don&#x27;t eat lunch alone</em></span>
+        </div>
+      </header>
+      <div class="grid">
+      <article class="book">
+        <img src="https://m.media-amazon.com/images/P/1625275323.01._SCLZZZZZZZ_.jpg" alt="HBR Guide to Office Politics 封面" loading="lazy" width="126">
+        <div>
+          <h3 class="bt">HBR Guide to Office Politics</h3>
+          <p class="bcn">哈佛商业评论：办公室政治指南</p>
+          <p class="bau mono">Karen Dillon</p>
+        </div>
+        <p class="bd">理解组织内部的权力动态，用建设性、也符合道德的方式应对职场政治，把个人影响力做大。</p>
+        <div class="acts">
+          <a class="btn solid" href="https://www.amazon.com/dp/1625275323" target="_blank" rel="noopener">Amazon 页面</a>
+          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=1625275323&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
+        </div>
+      </article>
+      <article class="book">
+        <img src="https://m.media-amazon.com/images/P/0385346654.01._SCLZZZZZZZ_.jpg" alt="Never Eat Alone 封面" loading="lazy" width="126">
+        <div>
+          <h3 class="bt">Never Eat Alone</h3>
+          <p class="bcn">别独自用餐</p>
+          <p class="bau mono">Keith Ferrazzi</p>
+        </div>
+        <p class="bd">真诚、互惠的人际网络怎么建。强连接和弱连接一起经营，资源和支持才会在需要时到位。</p>
+        <div class="acts">
+          <a class="btn solid" href="https://www.amazon.com/dp/0385346654" target="_blank" rel="noopener">Amazon 页面</a>
+          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=0385346654&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
+        </div>
+      </article>
+      <article class="book">
+        <img src="https://m.media-amazon.com/images/P/0312337361.01._SCLZZZZZZZ_.jpg" alt="Corporate Confidential 封面" loading="lazy" width="126">
+        <div>
+          <h3 class="bt">Corporate Confidential</h3>
+          <p class="bcn">职场潜规则</p>
+          <p class="bau mono">Cynthia Shapiro</p>
+        </div>
+        <p class="bd">前 HR 揭示企业内部没明说的人事规则和决策机制——知道暗礁在哪，才走得顺。</p>
+        <div class="acts">
+          <a class="btn solid" href="https://www.amazon.com/dp/0312337361" target="_blank" rel="noopener">Amazon 页面</a>
+          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=0312337361&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
+        </div>
+      </article>
+      </div>
+    </section>
+    <section class="slide" data-label="冲突解决">
+      <header class="theme-head">
+        <div class="theme-num mono">04</div>
+        <div class="theme-txt">
+          <h2 class="theme-title">冲突解决</h2>
+          <p class="theme-en mono">Conflict Resolution</p>
+          <p class="theme-lead">冲突本身不是问题，处理冲突的方式才是。</p>
+          <span class="cue mono">导师原话关键词 · <em>trigger</em></span>
+        </div>
+      </header>
+      <div class="grid">
+      <article class="book">
+        <img src="https://m.media-amazon.com/images/P/0804141231.01._SCLZZZZZZZ_.jpg" alt="Triggers 封面" loading="lazy" width="126">
+        <div>
+          <h3 class="bt">Triggers</h3>
+          <p class="bcn">触发器</p>
+          <p class="bau mono">Marshall Goldsmith</p>
+        </div>
+        <p class="bd">识别那些让我们瞬间进入防卫状态的“心理触发器”，并在冲突边缘控制情绪、改掉旧的行为模式。</p>
+        <div class="acts">
+          <a class="btn solid" href="https://www.amazon.com/dp/0804141231" target="_blank" rel="noopener">Amazon 页面</a>
+          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=0804141231&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
+        </div>
+      </article>
+      <article class="book">
+        <img src="https://m.media-amazon.com/images/P/0143118757.01._SCLZZZZZZZ_.jpg" alt="Getting to Yes 封面" loading="lazy" width="126">
+        <div>
+          <h3 class="bt">Getting to Yes</h3>
+          <p class="bcn">谈判力</p>
+          <p class="bau mono">Roger Fisher, William Ury</p>
+        </div>
+        <p class="bd">哈佛经典的“原则谈判法”：把人和问题分开，盯住双方真正的利益，而不是各自摆出来的立场。</p>
+        <div class="acts">
+          <a class="btn solid" href="https://www.amazon.com/dp/0143118757" target="_blank" rel="noopener">Amazon 页面</a>
+          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=0143118757&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
+        </div>
+      </article>
+      <article class="book">
+        <img src="https://m.media-amazon.com/images/P/189200528X.01._SCLZZZZZZZ_.jpg" alt="Nonviolent Communication 封面" loading="lazy" width="126">
+        <div>
+          <h3 class="bt">Nonviolent Communication</h3>
+          <p class="bcn">非暴力沟通</p>
+          <p class="bau mono">Marshall B. Rosenberg</p>
+        </div>
+        <p class="bd">观察、感受、需要、请求四步表达法。不激活对方的防御，深层冲突才有机会化解。</p>
+        <div class="acts">
+          <a class="btn solid" href="https://www.amazon.com/dp/189200528X" target="_blank" rel="noopener">Amazon 页面</a>
+          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=189200528X&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
+        </div>
+      </article>
+      </div>
+    </section>
+    <section class="slide" data-label="教练式引导">
+      <header class="theme-head">
+        <div class="theme-num mono">05</div>
+        <div class="theme-txt">
+          <h2 class="theme-title">教练式引导</h2>
+          <p class="theme-en mono">Coach</p>
+          <p class="theme-lead">好教练的本事不是给答案，是问出对方自己的答案。</p>
+          <span class="cue mono">导师原话关键词 · <em>coach through inquiry questions</em></span>
+        </div>
+      </header>
+      <div class="grid">
+      <article class="book">
+        <img src="https://m.media-amazon.com/images/P/0978440749.01._SCLZZZZZZZ_.jpg" alt="The Coaching Habit 封面" loading="lazy" width="126">
+        <div>
+          <h3 class="bt">The Coaching Habit</h3>
+          <p class="bcn">教练习惯</p>
+          <p class="bau mono">Michael Bungay Stanier</p>
+        </div>
+        <p class="bd">七个核心提问框架，专治管理者“忍不住直接给答案”的毛病。少说一点，多问一点。</p>
+        <div class="acts">
+          <a class="btn solid" href="https://www.amazon.com/dp/0978440749" target="_blank" rel="noopener">Amazon 页面</a>
+          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=0978440749&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
+        </div>
+      </article>
+      <article class="book">
+        <img src="https://m.media-amazon.com/images/P/1609949811.01._SCLZZZZZZZ_.jpg" alt="Humble Inquiry 封面" loading="lazy" width="126">
+        <div>
+          <h3 class="bt">Humble Inquiry</h3>
+          <p class="bcn">谦逊的提问</p>
+          <p class="bau mono">Edgar H. Schein</p>
+        </div>
+        <p class="bd">放下预设，用真正的好奇心去问。这是建立信任、让组织内部信息流动起来的底层心态。</p>
+        <div class="acts">
+          <a class="btn solid" href="https://www.amazon.com/dp/1609949811" target="_blank" rel="noopener">Amazon 页面</a>
+          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=1609949811&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
+        </div>
+      </article>
+      <article class="book">
+        <img src="https://m.media-amazon.com/images/P/1473658128.01._SCLZZZZZZZ_.jpg" alt="Coaching for Performance 封面" loading="lazy" width="126">
+        <div>
+          <h3 class="bt">Coaching for Performance</h3>
+          <p class="bcn">高绩效教练</p>
+          <p class="bau mono">Sir John Whitmore</p>
+        </div>
+        <p class="bd">教练领域的必读经典，系统讲透被广泛使用的 GROW 模型：目标、现状、选择、意愿。</p>
+        <div class="acts">
+          <a class="btn solid" href="https://www.amazon.com/dp/1473658128" target="_blank" rel="noopener">Amazon 页面</a>
+          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=1473658128&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
+        </div>
+      </article>
+      <article class="book">
+        <img src="https://m.media-amazon.com/images/P/1401301304.01._SCLZZZZZZZ_.jpg" alt="What Got You Here Won&#x27;t Get You There 封面" loading="lazy" width="126">
+        <div>
+          <h3 class="bt">What Got You Here Won&#x27;t Get You There</h3>
+          <p class="bcn">习惯力</p>
+          <p class="bau mono">Marshall Goldsmith</p>
+        </div>
+        <p class="bd">顶级高管教练指出：让你走到今天的行为模式，可能正是挡住你上一个台阶的东西。书里列了成功者常见的 20 个盲点。</p>
+        <div class="acts">
+          <a class="btn solid" href="https://www.amazon.com/dp/1401301304" target="_blank" rel="noopener">Amazon 页面</a>
+          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=1401301304&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
+        </div>
+      </article>
+      </div>
+    </section>
+    <section class="slide" data-label="资源">
+      <header class="theme-head">
+        <div class="theme-num mono">06</div>
+        <div class="theme-txt">
+          <h2 class="theme-title">资源与资讯</h2>
+          <p class="theme-en mono">Resources</p>
+          <p class="theme-lead">书给你框架，刊物给你当下。这三份是导师point到的长期输入源。</p>
+          <span class="cue mono">导师原话关键词 · <em>economist · wsj · financial time</em></span>
+        </div>
+      </header>
+      <div class="pubs">
+        <article class="pub">
+          <h3>The Economist</h3>
+          <p class="bcn">经济学人</p>
+          <p>全球政治、经济、商业与科技的深度分析和独立观点。练宏观视野和批判性思维的地方。</p>
+          <div class="acts"><a class="btn solid" href="https://www.economist.com/" target="_blank" rel="noopener">订阅 / 阅读</a></div>
+        </article>
+        <article class="pub">
+          <h3>The Wall Street Journal</h3>
+          <p class="bcn">华尔街日报</p>
+          <p>商业与金融的高质量实时报道。看市场动态、行业趋势和公司决策的权威来源。</p>
+          <div class="acts"><a class="btn solid" href="https://www.wsj.com/" target="_blank" rel="noopener">订阅 / 阅读</a></div>
+        </article>
+        <article class="pub">
+          <h3>Financial Times</h3>
+          <p class="bcn">金融时报</p>
+          <p>深厚的国际财经底子，经济数据、市场评论和商业领袖访谈，帮你读懂全球经济脉络。</p>
+          <div class="acts"><a class="btn solid" href="https://www.ft.com/" target="_blank" rel="noopener">订阅 / 阅读</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide" data-label="一键下单">
+      <div class="close-wrap">
+        <p class="kicker mono">收尾</p>
+        <h1 class="title">把书单带走</h1>
+        <p class="subtitle">下面这个按钮会把全部 17 本书一次性放进你的 Amazon 购物车，你再自己挑要留哪些、结哪些账。</p>
+        <div class="cart-card">
+          <h3>17 本书，一次加购</h3>
+          <p>点击后会跳转到 Amazon 购物车页面。需要先登录 Amazon 账号；加购不等于下单，结账那一步始终在你手里。</p>
+          <a class="btn solid big" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=0787987514&Quantity.1=1&ASIN.2=1501124021&Quantity.2=1&ASIN.3=1591846447&Quantity.3=1&ASIN.4=1434768740&Quantity.4=1&ASIN.5=1451663889&Quantity.5=1&ASIN.6=1260474186&Quantity.6=1&ASIN.7=1250235375&Quantity.7=1&ASIN.8=1625275323&Quantity.8=1&ASIN.9=0385346654&Quantity.9=1&ASIN.10=0312337361&Quantity.10=1&ASIN.11=0804141231&Quantity.11=1&ASIN.12=0143118757&Quantity.12=1&ASIN.13=189200528X&Quantity.13=1&ASIN.14=0978440749&Quantity.14=1&ASIN.15=1609949811&Quantity.15=1&ASIN.16=1473658128&Quantity.16=1&ASIN.17=1401301304&Quantity.17=1" target="_blank" rel="noopener">全部加入 Amazon 购物车</a>
+          <p class="note">版本说明：链接指向的都是英文原版的常见版本（平装或精装）。如果你想要中文版或 Kindle 版，点进单本的 Amazon 页面换版本即可。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="nav">
+  <span class="counter mono" id="counter">1 / 8</span>
+  <button id="prev" aria-label="上一页">&#8592;</button>
+  <button id="next" aria-label="下一页">&#8594;</button>
+</div>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var dots = document.getElementById('dots');
+  var stage = document.getElementById('stage');
+  var counter = document.getElementById('counter');
+  var prev = document.getElementById('prev'), next = document.getElementById('next');
+  var i = 0;
+
+  slides.forEach(function(s, n){
+    var b = document.createElement('button');
+    b.className = 'dot';
+    b.type = 'button';
+    b.setAttribute('aria-label', (n+1) + '. ' + s.dataset.label);
+    b.addEventListener('click', function(){ go(n); });
+    dots.appendChild(b);
+  });
+  var dotEls = Array.prototype.slice.call(dots.children);
+
+  function go(n){
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach(function(s, k){ s.dataset.active = (k === i) ? 'true' : 'false'; });
+    dotEls.forEach(function(d, k){ d.setAttribute('aria-current', k === i ? 'true' : 'false'); });
+    counter.textContent = (i + 1) + ' / ' + slides.length;
+    prev.disabled = (i === 0);
+    next.disabled = (i === slides.length - 1);
+    stage.scrollTop = 0;
+    try { history.replaceState(null, '', '#' + (i + 1)); } catch (e) {}
+  }
+
+  prev.addEventListener('click', function(){ go(i - 1); });
+  next.addEventListener('click', function(){ go(i + 1); });
+  document.addEventListener('keydown', function(ev){
+    if (ev.target && /^(INPUT|TEXTAREA)$/.test(ev.target.tagName)) return;
+    if (ev.key === 'ArrowRight' || ev.key === 'PageDown' || ev.key === ' ') { ev.preventDefault(); go(i + 1); }
+    else if (ev.key === 'ArrowLeft' || ev.key === 'PageUp') { ev.preventDefault(); go(i - 1); }
+    else if (ev.key === 'Home') { go(0); }
+    else if (ev.key === 'End') { go(slides.length - 1); }
+  });
+
+  var start = parseInt((location.hash || '').replace('#', ''), 10);
+  go(isNaN(start) ? 0 : start - 1);
+})();
+</script>
+
+</body>
+</html>
