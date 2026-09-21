@@ -138,12 +138,43 @@ h2.theme-title{
 .pub .bcn{margin:0}
 .pub p{font-size:13.5px; color:var(--ink-2); margin:0; flex:1; line-height:1.62}
 
+/* ---------- resources ---------- */
+.reslist{display:flex; flex-direction:column; gap:14px}
+.res{
+  display:grid; grid-template-columns:minmax(0,1fr) auto; gap:10px 20px; align-items:start;
+  background:var(--surface); border:1px solid var(--line-2); border-radius:6px;
+  padding:18px 20px; box-shadow:var(--shadow);
+}
+.res-tags{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:9px}
+.chip{
+  font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;
+  padding:3px 9px; border-radius:3px; background:var(--accent-soft); color:var(--accent-ink); border:1px solid transparent;
+}
+.chip.tie{background:transparent; color:var(--muted); border-color:var(--line)}
+.res h3{font-family:"Fraunces",Georgia,serif; font-size:18.5px; font-weight:600; line-height:1.24; margin:0 0 3px; text-wrap:balance}
+.res .src{font-size:11.5px; letter-spacing:.04em; color:var(--muted); margin:0 0 9px}
+.res p.why{font-size:13.5px; line-height:1.64; color:var(--ink-2); margin:0; max-width:88ch}
+.res .go{align-self:center; white-space:nowrap}
+@media (max-width:620px){
+  .res{grid-template-columns:1fr}
+  .res .go{align-self:start}
+}
+
 /* ---------- closing ---------- */
 .close-wrap{padding-block:min(7vh,58px)}
 .cart-card{
   background:var(--surface); border:1px solid var(--line); border-radius:8px;
   padding:26px 24px; box-shadow:var(--shadow); max-width:620px; margin-top:26px;
 }
+.listbox{
+  margin-top:18px; background:var(--surface-2); border:1px solid var(--line-2); border-radius:5px;
+  padding:14px 16px; max-height:238px; overflow:auto;
+}
+.listbox pre{
+  margin:0; font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace; font-size:11.5px; line-height:1.85;
+  color:var(--ink-2); white-space:pre-wrap; word-break:break-word;
+}
+#copyBtn[data-done="true"]{background:var(--accent-ink); border-color:var(--accent-ink)}
 .cart-card h3{font-family:"Fraunces",Georgia,serif; font-size:23px; font-weight:600; margin:0 0 8px}
 .cart-card p{font-size:14px; color:var(--ink-2); margin:0 0 18px}
 .note{font-size:12px; color:var(--muted); margin:14px 0 0; line-height:1.6}
@@ -189,11 +220,12 @@ h2.theme-title{
       <div class="cover-wrap">
         <p class="kicker mono">六个月 · 最后一课</p>
         <h1 class="title">导师留下的书单</h1>
-        <p class="subtitle">六个主题，十七本书，三份刊物。不是读完就结束的清单，是接下来几年可以反复回来翻的地图。</p>
+        <p class="subtitle">六个主题，十七本书，三份刊物，外加五份导师额外点到的资源。不是读完就结束的清单，是接下来几年可以反复回来翻的地图。</p>
         <div class="meta-row">
           <div class="meta"><b>06</b><span>主题</span></div>
           <div class="meta"><b>17</b><span>本书</span></div>
           <div class="meta"><b>03</b><span>刊物</span></div>
+          <div class="meta"><b>05</b><span>延伸资源</span></div>
         </div>
       </div>
     </section>
@@ -218,7 +250,6 @@ h2.theme-title{
         <p class="bd">所谓“真北”，是你自己的核心价值观和内在动力。本书讲的是如何据此建立真实的领导力，而不是在追逐成功的过程中把自己弄丢。</p>
         <div class="acts">
           <a class="btn solid" href="https://www.amazon.com/dp/0787987514" target="_blank" rel="noopener">Amazon 页面</a>
-          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=0787987514&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
         </div>
       </article>
       <article class="book">
@@ -231,7 +262,6 @@ h2.theme-title{
         <p class="bd">桥水创始人达利欧把自己几十年的决策方式写成了一套可执行的原则。核心不是抄他的答案，是学他怎么把经验沉淀成体系。</p>
         <div class="acts">
           <a class="btn solid" href="https://www.amazon.com/dp/1501124021" target="_blank" rel="noopener">Amazon 页面</a>
-          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=1501124021&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
         </div>
       </article>
       <article class="book">
@@ -244,7 +274,6 @@ h2.theme-title{
         <p class="bd">行动和沟通之前，先说清楚使命与信念。“为什么”才是驱动自己、也打动别人的那一层。</p>
         <div class="acts">
           <a class="btn solid" href="https://www.amazon.com/dp/1591846447" target="_blank" rel="noopener">Amazon 页面</a>
-          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=1591846447&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
         </div>
       </article>
       <article class="book">
@@ -257,7 +286,6 @@ h2.theme-title{
         <p class="bd">英特尔 CEO 帕特·基辛格谈信仰、家庭与事业的平衡：追求卓越的同时，怎么不把生活当成代价付出去。</p>
         <div class="acts">
           <a class="btn solid" href="https://www.amazon.com/dp/1434768740" target="_blank" rel="noopener">Amazon 页面</a>
-          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=1434768740&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
         </div>
       </article>
       </div>
@@ -283,7 +311,6 @@ h2.theme-title{
         <p class="bd">表面是育儿书，实际讲的是不评判、共情和倾听——这套技巧在职场和成人关系里同样成立。</p>
         <div class="acts">
           <a class="btn solid" href="https://www.amazon.com/dp/1451663889" target="_blank" rel="noopener">Amazon 页面</a>
-          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=1451663889&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
         </div>
       </article>
       <article class="book">
@@ -296,7 +323,6 @@ h2.theme-title{
         <p class="bd">高风险、情绪激烈、意见对立的那几次对话，往往决定结果。本书教你在那种时刻保持理性、营造安全感、把共识谈出来。</p>
         <div class="acts">
           <a class="btn solid" href="https://www.amazon.com/dp/1260474186" target="_blank" rel="noopener">Amazon 页面</a>
-          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=1260474186&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
         </div>
       </article>
       <article class="book">
@@ -309,7 +335,6 @@ h2.theme-title{
         <p class="bd">同时做到“个体关怀”和“直接挑战”。少了前者是冒犯，少了后者是虚伪，两者都在才叫有效反馈。</p>
         <div class="acts">
           <a class="btn solid" href="https://www.amazon.com/dp/1250235375" target="_blank" rel="noopener">Amazon 页面</a>
-          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=1250235375&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
         </div>
       </article>
       </div>
@@ -335,7 +360,6 @@ h2.theme-title{
         <p class="bd">理解组织内部的权力动态，用建设性、也符合道德的方式应对职场政治，把个人影响力做大。</p>
         <div class="acts">
           <a class="btn solid" href="https://www.amazon.com/dp/1625275323" target="_blank" rel="noopener">Amazon 页面</a>
-          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=1625275323&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
         </div>
       </article>
       <article class="book">
@@ -348,7 +372,6 @@ h2.theme-title{
         <p class="bd">真诚、互惠的人际网络怎么建。强连接和弱连接一起经营，资源和支持才会在需要时到位。</p>
         <div class="acts">
           <a class="btn solid" href="https://www.amazon.com/dp/0385346654" target="_blank" rel="noopener">Amazon 页面</a>
-          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=0385346654&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
         </div>
       </article>
       <article class="book">
@@ -361,7 +384,6 @@ h2.theme-title{
         <p class="bd">前 HR 揭示企业内部没明说的人事规则和决策机制——知道暗礁在哪，才走得顺。</p>
         <div class="acts">
           <a class="btn solid" href="https://www.amazon.com/dp/0312337361" target="_blank" rel="noopener">Amazon 页面</a>
-          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=0312337361&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
         </div>
       </article>
       </div>
@@ -387,7 +409,6 @@ h2.theme-title{
         <p class="bd">识别那些让我们瞬间进入防卫状态的“心理触发器”，并在冲突边缘控制情绪、改掉旧的行为模式。</p>
         <div class="acts">
           <a class="btn solid" href="https://www.amazon.com/dp/0804141231" target="_blank" rel="noopener">Amazon 页面</a>
-          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=0804141231&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
         </div>
       </article>
       <article class="book">
@@ -400,7 +421,6 @@ h2.theme-title{
         <p class="bd">哈佛经典的“原则谈判法”：把人和问题分开，盯住双方真正的利益，而不是各自摆出来的立场。</p>
         <div class="acts">
           <a class="btn solid" href="https://www.amazon.com/dp/0143118757" target="_blank" rel="noopener">Amazon 页面</a>
-          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=0143118757&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
         </div>
       </article>
       <article class="book">
@@ -413,7 +433,6 @@ h2.theme-title{
         <p class="bd">观察、感受、需要、请求四步表达法。不激活对方的防御，深层冲突才有机会化解。</p>
         <div class="acts">
           <a class="btn solid" href="https://www.amazon.com/dp/189200528X" target="_blank" rel="noopener">Amazon 页面</a>
-          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=189200528X&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
         </div>
       </article>
       </div>
@@ -439,7 +458,6 @@ h2.theme-title{
         <p class="bd">七个核心提问框架，专治管理者“忍不住直接给答案”的毛病。少说一点，多问一点。</p>
         <div class="acts">
           <a class="btn solid" href="https://www.amazon.com/dp/0978440749" target="_blank" rel="noopener">Amazon 页面</a>
-          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=0978440749&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
         </div>
       </article>
       <article class="book">
@@ -452,7 +470,6 @@ h2.theme-title{
         <p class="bd">放下预设，用真正的好奇心去问。这是建立信任、让组织内部信息流动起来的底层心态。</p>
         <div class="acts">
           <a class="btn solid" href="https://www.amazon.com/dp/1609949811" target="_blank" rel="noopener">Amazon 页面</a>
-          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=1609949811&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
         </div>
       </article>
       <article class="book">
@@ -465,7 +482,6 @@ h2.theme-title{
         <p class="bd">教练领域的必读经典，系统讲透被广泛使用的 GROW 模型：目标、现状、选择、意愿。</p>
         <div class="acts">
           <a class="btn solid" href="https://www.amazon.com/dp/1473658128" target="_blank" rel="noopener">Amazon 页面</a>
-          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=1473658128&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
         </div>
       </article>
       <article class="book">
@@ -478,7 +494,6 @@ h2.theme-title{
         <p class="bd">顶级高管教练指出：让你走到今天的行为模式，可能正是挡住你上一个台阶的东西。书里列了成功者常见的 20 个盲点。</p>
         <div class="acts">
           <a class="btn solid" href="https://www.amazon.com/dp/1401301304" target="_blank" rel="noopener">Amazon 页面</a>
-          <a class="btn" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=1401301304&Quantity.1=1" target="_blank" rel="noopener">加入购物车</a>
         </div>
       </article>
       </div>
@@ -515,16 +530,107 @@ h2.theme-title{
       </div>
     </section>
 
-    <section class="slide" data-label="一键下单">
+    <section class="slide" data-label="延伸资源">
+      <header class="theme-head">
+        <div class="theme-num mono">07</div>
+        <div class="theme-txt">
+          <h2 class="theme-title">延伸资源</h2>
+          <p class="theme-en mono">Beyond the Books</p>
+          <p class="theme-lead">书之外，导师还点了这几样：两个可以直接做的自评工具，两段值得花时间看完的视频，一篇把周期讲清楚的长文。</p>
+          <span class="cue mono">形式不同 · <em>测一测 · 看一看 · 读一读</em></span>
+        </div>
+      </header>
+      <div class="reslist">
+        <article class="res">
+          <div>
+            <div class="res-tags">
+              <span class="chip">评估工具</span>
+              <span class="chip tie">关联 · 价值观 / 领导力</span>
+            </div>
+            <h3>LDMA — Lectical Leadership Decision-Making Assessment</h3>
+            <p class="src mono">Lectica · lectica.org</p>
+            <p class="why">专门测量领导者在 VUCA（易变、不确定、复杂、模糊）情境下的决策能力，测的是常规测评抓不到的那部分。导师推荐它的理由很实在：不是给你打个分，是让你看清自己哪几个维度还需要往上走。</p>
+          </div>
+          <a class="btn solid go" href="https://lectica.org/about/ldma" target="_blank" rel="noopener">打开</a>
+        </article>
+        <article class="res">
+          <div>
+            <div class="res-tags">
+              <span class="chip">演讲 · 20 分钟</span>
+              <span class="chip tie">关联 · 价值观</span>
+            </div>
+            <h3>How Will You Measure Your Life?</h3>
+            <p class="src mono">Clay Christensen · TEDxBoston</p>
+            <p class="why">克里斯坦森用管理理论回答一个私人问题：怎么衡量自己这一生。核心警告是——为“眼前的成就”做优化，在更长的时间尺度和更全局的视角上，很可能是一场灾难。</p>
+          </div>
+          <a class="btn solid go" href="https://www.youtube.com/watch?v=tvos4nORf_Y" target="_blank" rel="noopener">打开</a>
+        </article>
+        <article class="res">
+          <div>
+            <div class="res-tags">
+              <span class="chip">互动练习</span>
+              <span class="chip tie">关联 · 价值观</span>
+            </div>
+            <h3>Personal Values Card Sort</h3>
+            <p class="src mono">Dr. Jenny Shields · drjennyshields.com</p>
+            <p class="why">免费的在线价值观卡片分类练习，方法论出自接纳与承诺疗法（ACT）。一轮排下来，你会看到自己真正排在前面的是什么——比嘴上说的那套更诚实。</p>
+          </div>
+          <a class="btn solid go" href="https://drjennyshields.com/values-card-sort/" target="_blank" rel="noopener">打开</a>
+        </article>
+        <article class="res">
+          <div>
+            <div class="res-tags">
+              <span class="chip">访谈</span>
+              <span class="chip tie">关联 · 玩转组织架构</span>
+            </div>
+            <h3>Retired Amazon VP: How Corporate Politics Work And How To Win</h3>
+            <p class="src mono">Ethan Evans（Ryan Peterman 频道）</p>
+            <p class="why">退休的 Amazon VP 把大公司政治怎么运作、怎么在其中不吃亏地往上走讲透。和 Theme 3 那三本书配着看，一本讲原理，这个讲现场。</p>
+          </div>
+          <a class="btn solid go" href="https://www.youtube.com/watch?v=6WaeGfLnRvc" target="_blank" rel="noopener">打开</a>
+        </article>
+        <article class="res">
+          <div>
+            <div class="res-tags">
+              <span class="chip">长文</span>
+              <span class="chip tie">关联 · 资源与资讯</span>
+            </div>
+            <h3>互联网泡沫简史</h3>
+            <p class="src mono">@snowboat84 · X</p>
+            <p class="why">从 2000 年超级碗上十七家互联网公司的广告讲起，一路梳理到纳斯达克见顶、五万亿市值蒸发。不做道德审判也不预测未来，只把这段历史摆清楚——读完对“这次不一样”会更警觉一点。</p>
+          </div>
+          <a class="btn solid go" href="https://x.com/snowboat84/status/2069569161911812606" target="_blank" rel="noopener">打开</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide" data-label="带走书单">
       <div class="close-wrap">
         <p class="kicker mono">收尾</p>
         <h1 class="title">把书单带走</h1>
-        <p class="subtitle">下面这个按钮会把全部 17 本书一次性放进你的 Amazon 购物车，你再自己挑要留哪些、结哪些账。</p>
+        <p class="subtitle">全部 17 本书的书名、作者和 ISBN 都在下面。点一下复制，粘到 Amazon 搜索框、备忘录或者群里都行。</p>
         <div class="cart-card">
-          <h3>17 本书，一次加购</h3>
-          <p>点击后会跳转到 Amazon 购物车页面。需要先登录 Amazon 账号；加购不等于下单，结账那一步始终在你手里。</p>
-          <a class="btn solid big" href="https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=0787987514&Quantity.1=1&ASIN.2=1501124021&Quantity.2=1&ASIN.3=1591846447&Quantity.3=1&ASIN.4=1434768740&Quantity.4=1&ASIN.5=1451663889&Quantity.5=1&ASIN.6=1260474186&Quantity.6=1&ASIN.7=1250235375&Quantity.7=1&ASIN.8=1625275323&Quantity.8=1&ASIN.9=0385346654&Quantity.9=1&ASIN.10=0312337361&Quantity.10=1&ASIN.11=0804141231&Quantity.11=1&ASIN.12=0143118757&Quantity.12=1&ASIN.13=189200528X&Quantity.13=1&ASIN.14=0978440749&Quantity.14=1&ASIN.15=1609949811&Quantity.15=1&ASIN.16=1473658128&Quantity.16=1&ASIN.17=1401301304&Quantity.17=1" target="_blank" rel="noopener">全部加入 Amazon 购物车</a>
-          <p class="note">版本说明：链接指向的都是英文原版的常见版本（平装或精装）。如果你想要中文版或 Kindle 版，点进单本的 Amazon 页面换版本即可。</p>
+          <h3>17 本书，一份清单</h3>
+          <p>按 ISBN 搜最准：复制后把其中一行粘进 Amazon 搜索框，出来的就是这里链接的那一版。每本书的 Amazon 页面也可以从前面各主题页直接点进去。</p>
+          <button class="btn solid big" id="copyBtn" type="button">复制全部书单</button>
+          <div class="listbox"><pre id="listText">1. True North — Bill George — ISBN 0787987514
+2. Principles: Life and Work — Ray Dalio — ISBN 1501124021
+3. Start with Why — Simon Sinek — ISBN 1591846447
+4. The Juggling Act — Pat Gelsinger — ISBN 1434768740
+5. How to Talk So Kids Will Listen &amp; Listen So Kids Will Talk — Adele Faber, Elaine Mazlish — ISBN 1451663889
+6. Crucial Conversations — Kerry Patterson et al. — ISBN 1260474186
+7. Radical Candor — Kim Scott — ISBN 1250235375
+8. HBR Guide to Office Politics — Karen Dillon — ISBN 1625275323
+9. Never Eat Alone — Keith Ferrazzi — ISBN 0385346654
+10. Corporate Confidential — Cynthia Shapiro — ISBN 0312337361
+11. Triggers — Marshall Goldsmith — ISBN 0804141231
+12. Getting to Yes — Roger Fisher, William Ury — ISBN 0143118757
+13. Nonviolent Communication — Marshall B. Rosenberg — ISBN 189200528X
+14. The Coaching Habit — Michael Bungay Stanier — ISBN 0978440749
+15. Humble Inquiry — Edgar H. Schein — ISBN 1609949811
+16. Coaching for Performance — Sir John Whitmore — ISBN 1473658128
+17. What Got You Here Won&#x27;t Get You There — Marshall Goldsmith — ISBN 1401301304</pre></div>
+          <p class="note">版本说明：以上都是英文原版的常见版本（平装或精装）。想要中文版或 Kindle 版，点进单本的 Amazon 页面换版本即可。</p>
         </div>
       </div>
     </section>
@@ -576,6 +682,34 @@ h2.theme-title{
     else if (ev.key === 'Home') { go(0); }
     else if (ev.key === 'End') { go(slides.length - 1); }
   });
+
+  var copyBtn = document.getElementById('copyBtn');
+  var listText = document.getElementById('listText');
+  if (copyBtn && listText) {
+    copyBtn.addEventListener('click', function(){
+      var text = listText.textContent;
+      var done = function(){
+        copyBtn.textContent = '已复制 17 本';
+        copyBtn.dataset.done = 'true';
+        setTimeout(function(){ copyBtn.textContent = '复制全部书单'; copyBtn.dataset.done = 'false'; }, 2400);
+      };
+      var fallback = function(){
+        try {
+          var r = document.createRange();
+          r.selectNodeContents(listText);
+          var sel = window.getSelection();
+          sel.removeAllRanges(); sel.addRange(r);
+          document.execCommand('copy');
+          done();
+        } catch (e) {
+          copyBtn.textContent = '请手动选中下方文字复制';
+        }
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(fallback);
+      } else { fallback(); }
+    });
+  }
 
   var start = parseInt((location.hash || '').replace('#', ''), 10);
   go(isNaN(start) ? 0 : start - 1);
